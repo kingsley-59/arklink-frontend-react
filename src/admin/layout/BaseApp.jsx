@@ -16,12 +16,23 @@ const DashboardHeader = ({user}) => {
     return (
         <div className='bg-secondary p-4 sticky-top d-flex justify-content-between align-items-center'>
             <span className='h3 fw-bold text-white'>Site Admin Dashboard</span>
-            <span className='fw-light text-white'>Admin: {user?.name ?? ''}</span>
+            <span className='fw-light text-white'>Admin: {user?.name ?? '_________'}</span>
         </div>
     );
 }
 
-const AppMains = ({user}) => {
+const FailedToRetrieveData = () => {
+    return (
+        <div className="container text-center p-4 w-100">
+            <div className="shadow rounded p-4">
+                <div className="h1 fw-bold mb-3 m-auto" style={{color: '#c2c2c2'}}>Failed to retrieve data!</div>
+                <div className="h4 fw-light mb-3 m-auto" style={{color: '#a0a0a0'}}>Please check your network and refresh the page.</div>
+            </div>
+        </div>
+    )
+}
+
+const AppMains = ({user, display}) => {
     return (
         <div className="dashboard-wrapper" style={dashboardWrapperStyle}>
             <div className="sidebar bg-dark" style={sidebarStyle}>
@@ -32,7 +43,7 @@ const AppMains = ({user}) => {
                     <DashboardHeader user={user} />
                 </div>
                 <div>
-                    <Outlet />
+                    {display ? <Outlet /> : <FailedToRetrieveData />}
                 </div>
             </div>
         </div>
@@ -51,6 +62,7 @@ const BaseApp = () => {
     // window width state
     const [width, height] = useWindowSize();
     const [open, setOpen] = useState(true);
+    const [display, setDisplay] = useState(true);
     console.log(width, height);
 
     // track user details
@@ -89,11 +101,12 @@ const BaseApp = () => {
                     console.log(user)
                 }
             } catch (error) {
+                setDisplay(false);
                 console.log('Error: ',error.message)
             }
         }
 
-        getUserDetails();
+        //getUserDetails();
     }, [])
 
     return (
@@ -101,7 +114,7 @@ const BaseApp = () => {
             <MenuToggle open={open} setOpen={setOpen} />
             { (width < 800) 
                 ? <MinimumWidthAlert />
-                : <AppMains user={user} />
+                : <AppMains user={user} display={display} />
             }
             
         </>

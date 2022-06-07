@@ -18,6 +18,7 @@ import Messages from './admin/Messages';
 import ManageProducts from './admin/Products';
 import ManageSubscribers from './admin/Subscribers';
 import AdminArticles from './admin/AdminArticles';
+import AdminGallery from './admin/AdminGallery';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path='messages' element={<Messages />} />
               <Route path='subscribers' element={<ManageSubscribers />} />
               <Route path='products' element={<ManageProducts />} />
+              <Route path='gallery' element={<AdminGallery />} />
               <Route path='articles' element={<AdminArticles />} />
 
               <Route index element={<AdminHome />} />

@@ -175,11 +175,16 @@
 
 
 .menu-item:hover {
-  border-radius: 0px 15px;
+  border-radius: 0px 15px 15px 15px;
   background-color: #393f31;
   cursor: pointer;
 }
 
 .menu-item.active {
   background-color: #393f31;
+}
+
+.message-card:hover {
+  cursor: pointer;
+  opacity: 50%;
 }

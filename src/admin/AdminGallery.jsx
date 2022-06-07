@@ -11,7 +11,7 @@ const FailedToRetrieveData = () => {
   )
 }
 
-const Subscribers = () => {
+const AdminGallery = () => {
   return (
     <div>
       <FailedToRetrieveData />
@@ -19,4 +19,4 @@ const Subscribers = () => {
   )
 }
 
-export default Subscribers
+export default AdminGallery
