@@ -1,14 +1,24 @@
 import axios from "axios";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = 'http://localhost:8000/'
 
 class Auth {
     async login(email, password) {
-        const response = await axios.post(API_URL + 'login.php', { email, password });
-        if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response.data));
+        try {
+            const response = await axios.post(API_URL + '/login.php', { email, password });
+            if (response.data.token) {
+                let userDetail = {
+                    email: response.data.email,
+                    token: response.data.token,
+                }
+                localStorage.setItem('user', JSON.stringify(userDetail));
+            }
+            return response.data;
+        } catch (error) {
+            //throw new Error('Http request failed')
+            throw new Error(error.message)
         }
-        return response.data;
     }
 
     async register(name, email, password) {

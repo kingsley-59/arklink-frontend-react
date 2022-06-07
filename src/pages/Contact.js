@@ -1,11 +1,10 @@
 import React from 'react';
 import Header from '../components/Header';
 import PreHeader from '../components/PreHeader';
-import Banner from '../components/Banner';
-import AboutSection from '../components/AboutSection';
+import NavBanner from '../components/NavBanner';
+import GetQuote from '../components/GetQuote';
 import Brands from '../components/Brands';
 import Categories from '../components/Categories';
-import ProductSection from '../components/ProductSection';
 import GallerySection from '../components/GallerySection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
@@ -18,11 +17,10 @@ const Home = () => {
     <>
     <PreHeader />
     <Header />
-    <Banner />
-    <AboutSection />
+    <NavBanner heading={'Contact'}/>
+    <GetQuote />
     <Brands />
     <Categories />
-    <ProductSection />
     <GallerySection />
     <ContactSection />
     <Footer />

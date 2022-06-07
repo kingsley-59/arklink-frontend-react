@@ -30,7 +30,7 @@ const Header = () => {
         <Nav.Link href="/contact">Contact</Nav.Link>
       </Nav>
       <Nav>
-        <Button variant="outline-success">Get Quote</Button>
+        <a href='/contact'><Button variant="outline-success">Get Quote</Button></a>
       </Nav>
     </Navbar.Collapse>
   </Container>

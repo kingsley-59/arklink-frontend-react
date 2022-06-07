@@ -1,8 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import {Client as Styletron} from 'styletron-engine-atomic';
-import {Provider as StyletronProvider} from 'styletron-react';
-import {LightTheme, BaseProvider} from 'baseui';
-import Dashboard from './components/Dashboard';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthProvider';
 import Home from './pages/Home';
 import About from './pages/About';
 import Categories from './pages/Categories';
@@ -13,48 +10,52 @@ import S3Test from './pages/S3Test';
 import NotFound from './pages/NotFound';
 import RequireAuth from './auth/auth-ui/RequireAuth';
 import BaseApp from './admin/layout/BaseApp';
-import DashboardContent from './components/DashboardContent';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 import AdminHome from './admin/AdminHome';
+import Messages from './admin/Messages';
+import ManageProducts from './admin/Products';
+import ManageSubscribers from './admin/Subscribers';
+import AdminArticles from './admin/AdminArticles';
 
-const engine = new Styletron();
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route exact path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/products/:category' element={<Products />} />
-        <Route path='/categories' element={<Categories />} />
-        <Route path='/gallery' element={<Gallery />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/upload' element={<S3Test />} />
+      <AuthProvider>
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/products/:category' element={<Products />} />
+          <Route path='/categories' element={<Categories />} />
+          <Route path='/gallery' element={<Gallery />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
 
-        <Route element={<RequireAuth />}>
-          <Route path='/admin' element={<BaseApp />}>
-            <Route path='home' element={<AdminHome />} />
+          <Route path='/upload' element={<S3Test />} />
 
-            <Route index element={<AdminHome />} />
+          <Route element={<RequireAuth />}>
+            <Route path='/admin' element={<BaseApp />}>
+              <Route path='home' element={<AdminHome />} />
+              <Route path='messages' element={<Messages />} />
+              <Route path='subscribers' element={<ManageSubscribers />} />
+              <Route path='products' element={<ManageProducts />} />
+              <Route path='articles' element={<AdminArticles />} />
+
+              <Route index element={<AdminHome />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }
 
 export default App;
 
-
-// const DashboardApp = () => {
-//   return (
-//     <StyletronProvider value={engine}>
-//       <BaseProvider theme={LightTheme}>
-//         <Dashboard />
-//       </BaseProvider>
-//     </StyletronProvider>
-//   );
-// }

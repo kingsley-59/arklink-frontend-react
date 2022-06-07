@@ -19,12 +19,12 @@ const QuickLinks = () => {
     return (
         <div className='text-white mb-4'>
             <span className='text-bold'>Quicklinks:</span><br/>
-            <span>Home</span><br/>
-            <span>About</span><br/>
-            <span>Products</span><br/>
-            <span>Categories</span><br/>
-            <span>Gallery</span><br/>
-            <span>Contact</span><br/>
+            <a href="/home" className='text-white'><span>Home</span></a><br/>
+            <a href="/about" className='text-white'><span>About</span></a><br/>
+            <a href="/products" className='text-white'><span>Products</span></a><br/>
+            <a href="/categories" className='text-white'><span>Categories</span></a><br/>
+            <a href="/gallery" className='text-white'><span>Gallery</span></a><br/>
+            <a href="/contact" className='text-white'><span>Contact</span></a><br/>
         </div>
     )
 }
@@ -73,7 +73,7 @@ const Footer = () => {
         </div>
         <hr />
         <div className="text-center" style={{height: 'fit-content'}}>
-            <small className="text-secondary">Copyright &copy; 2022 | All rights reserved </small>
+            <small className="text-secondary">Copyright &copy; 2022 | All rights reserved | <a href='/login' className='text-white'>Admin Login</a> </small>
         </div>
     </div>
   )

@@ -1,62 +1,67 @@
 import React, {useState} from 'react'
+import {Modal} from 'react-bootstrap'
 
 const Images = [
-    '//placekitten.com/300/200',
-    '//placekitten.com/g/300/200',
-    '//placekitten.com/300/200',
-    '//placekitten.com/g/300/200',
-    '//placekitten.com/300/200',
-    '//placekitten.com/g/300/200',
-    '//placekitten.com/300/200',
-    '//placekitten.com/g/300/200',
-    '//placekitten.com/300/200'
+    {name: '', src: require('../assets/images/pexel-bathroom-1.jpg')},
+    {name: '', src: require('../assets/images/pexel-bathroom-2.jpg')},
+    {name: '', src: require('../assets/images/pexel-bathroom-3.jpg')},
+    {name: '', src: require('../assets/images/pexel-bathroom-4.jpg')},
+    {name: '', src: require('../assets/images/pexel-doors-1.jpg')},
+    {name: '', src: require('../assets/images/pexel-doors-2.jpg')},
+    {name: '', src: require('../assets/images/pexel-doors-3.jpg')},
+    {name: '', src: require('../assets/images/pexel-doors-4.jpg')},
+    {name: '', src: require('../assets/images/pexel-tiles-1.jpg')},
+    {name: '', src: require('../assets/images/pexel-tiles-2.jpg')},
+    {name: '', src: require('../assets/images/pexel-tiles-3.jpg')},
+    {name: '', src: require('../assets/images/pexel-tiles-4.jpg')},
 ]
 
+const ImageDisplayModal = ({src, show, handleShow}) => {
+
+    const handleClose = () => handleShow(false);
+
+    return (
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+                <img src={src} alt={'arklink product'} width='100%' height='100%' />
+            </Modal.Body>
+            <Modal.Footer>
+                <button onClick={handleClose}></button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
 const MainGallery = () => {
-    const [photoIndex, setPhotoIndex] = useState(0)
+    const [photoSrc, setPhotoSrc] = useState('')
     const [isOpen, setIsOpen] = useState(false)
 
-    const handleImageClick = (idx) => {
+    const handleImageClick = (src) => {
         setIsOpen(true);
-        setPhotoIndex(idx)
+        setPhotoSrc(src)
     }
+
+    const ImageBox = ({src, name}) => {
+        return (
+            <div className="col-sm-6 col-md-4 col-lg-3 p-0">
+                <img src={src} alt={name} width='100%' height='100%' onClick={() => handleImageClick(src)} />
+            </div>
+        )
+    }
+
+    const ImageList = Images.map(({name, src}, idx) => {
+        return <ImageBox src={src} name={name} key={idx} />
+    })
     
     return (
     <div className='my-3 p-5'>
       <h1 className='text-middle mt-4'>Photos</h1>
-      <div className='row'>
-          <div className='col-md-4 col-sm-6'>
-              <img src={Images[0]} onClick={(e) => handleImageClick(0)} />
-              <img src={Images[3]} onClick={(e) => handleImageClick(3)} />
-              <img src={Images[6]} onClick={(e) => handleImageClick(6)} />
-          </div>
-          <div className='col-md-4 col-sm-6'>
-              <img src={Images[1]} onClick={(e) => handleImageClick(1) } />
-              <img src={Images[4]} onClick={(e) => handleImageClick(4)} />
-              <img src={Images[7]} onClick={(e) => handleImageClick(7)} />
-          </div>
-          <div className='col-md-4 col-sm-6'>
-              <img src={Images[2]} onClick={(e) => handleImageClick(2)} />
-              <img src={Images[5]} onClick={(e) => handleImageClick(5)} />
-              <img src={Images[8]} onClick={(e) => handleImageClick(8)} />
-          </div>
+      <div className='row text-center'>
+         {ImageList}
       </div>
       
-     {/* {isOpen && (
-      <Lightbox
-        images={Images}
-        mainSrc={Images[photoIndex]}
-        nextSrc={Images[(photoIndex + 1) % Images.length]}
-        prevSrc={Images[(photoIndex + Images.length - 1) % Images.length]}
-        onCloseRequest={() => setIsOpen(false)}
-        onMovePrevRequest={() =>
-            setPhotoIndex((photoIndex + Images.length - 1) % Images.length)
-        }
-        onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % Images.length)
-        }
-      />
-    )} */}
+     <ImageDisplayModal src={photoSrc} show={isOpen} handleShow={setIsOpen} />
     </div>
     );
 }
