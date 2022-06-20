@@ -1,17 +1,16 @@
 import React from 'react';
-import { Row, Col, Nav, Navbar, Container, Button, NavDropdown } from 'react-bootstrap'
+import { Row, Col, Container, Button } from 'react-bootstrap'
 import Header from '../components/Header';
 import PreHeader from '../components/PreHeader';
 import NavBanner from '../components/NavBanner';
 import AboutSection from '../components/AboutSection';
 import Brands from '../components/Brands';
 import Categories from '../components/Categories';
-import ProductSection from '../components/ProductSection';
 import GallerySection from '../components/GallerySection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 
-const Title = "";
+const Title = "About Us - Arklink Investment";
 
 const AboutMains = () => {
     return (
@@ -97,7 +96,9 @@ const Home = () => {
     <PreHeader />
     <Header />
     <NavBanner heading={'About Us'} />
-    <AboutMains />
+    {/* <AboutMains /> */}
+    <AboutSection showAll={true} />
+    <Categories />
     <Brands />
     <GallerySection />
     <ContactSection />

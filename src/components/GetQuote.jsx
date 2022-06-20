@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { Alert } from 'react-bootstrap'
+import axios from 'axios'
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 const GetQuote = () => {
     const [name, setName] = useState('')
@@ -8,15 +11,41 @@ const GetQuote = () => {
     const [address, setAddress] = useState(null)
     const [details, setDetails] = useState('')
 
-    const [errMsg, setErrMsg] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
     const [successMsg, setSuccessMsg] = useState('')
 
+    const [loading, setLoading] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true)
+        setErrorMsg('')
+        setSuccessMsg('')
 
-        setSuccessMsg(`Thank You ${name.toUpperCase()}! We will respond shortly via email.`)
-        console.log('Email: ',email)
-        console.log('Details: ',details)
+        if (!name || !email || !phone || !details) {
+            setErrorMsg("Please fill all required fields!")
+            setLoading(false)
+            return;
+        }
+        let url = API_URL + '/api/quotes'
+        let payload = {
+            name, email, phone, address, details
+        }
+        axios.post(url, payload)
+        .then(response => {
+            let _data = response.data
+            console.log(_data)
+            if (_data === 1) {
+                setSuccessMsg(`Thank You ${name.toUpperCase()}! We will respond shortly via email.`) 
+            } else {
+                setSuccessMsg(_data)
+            }
+        })
+        .catch(error => {
+            console.error('An error occurred! ', error)
+            setErrorMsg('Something went wrong! Check your network and try again.')
+        })
+        setLoading(false)
+
         return ;
     }
 
@@ -26,7 +55,7 @@ const GetQuote = () => {
             <div className="quote-heading h3 fw-bolder text-center">Tell Us What You Need...</div>
             <div className="quote-form">
                 {successMsg && <Alert variant='success' onClose={() => setSuccessMsg('')} dismissible>{successMsg}</Alert> }
-                {errMsg && <Alert variant='warning' onClose={() => setErrMsg('')} dismissible>{errMsg}</Alert> }
+                {errorMsg && <Alert variant='warning' onClose={() => setErrorMsg('')} dismissible>{errorMsg}</Alert> }
                 <form onSubmit={handleSubmit}>
                     <div className="form-group mb-3">
                         <label htmlFor="quote-name">Name</label><span className="text-danger">*</span>

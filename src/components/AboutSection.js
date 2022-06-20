@@ -1,23 +1,38 @@
-import React from 'react';
-import { Row, Col, Nav, Navbar, Container, Button, NavDropdown } from 'react-bootstrap'
+import React, { useEffect } from 'react';
+import { Row, Col, Container, Button } from 'react-bootstrap'
 
-const AboutSection = () => {
+const API_URL = process.env.REACT_APP_API_URL;
+
+function slashText(text, lenght = 50) {
+    let textArray = text.split(" ")
+    if (textArray <= lenght) {
+        return textArray.join(" ")
+    }
+    let newTextArray = textArray.slice(0, lenght+1)
+    let result = newTextArray.join(" ")
+    return result + '...';
+}
+
+const AboutSection = ({content, showAll}) => {
+    const defaultAboutText = `
+        This content will be a bit descriptive. Having passed the message that we sell 
+        ceramic tiles and marble, we will now move forward to saying a few things about us 
+        as a company. Definitely, it won't be as long as the text in the about page.
+        This content will be a bit descriptive. Having passed the message that we sell 
+        ceramic tiles and marble, we will now move forward to saying a few things about us as a company.
+    `
+    const aboutEssay = content?.about_essay ?? defaultAboutText
+    
     return (
         <Container className="site-section bg-white" fluid>
             <Container className='section-title text-center mb-5'>About Us</Container>
             <Row className="m-auto justify-content-around align-items-center">
                 <Col lg={5} md={6} xs={10} className="p-3">
                     <div className="about-section-heading text-center mb-3">
-                        Some Header Text About Content
+                        What you need to know about Arklink.
                     </div>
                     <p className="about-text text-left">
-                    This content will be a bit descriptive. Having passed the message that we sell 
-                    ceramic tiles and marble, we will now move forward to saying a few things about us 
-                    as a company. Definitely, it won;t be as long as the text in the about page.
-                    </p>
-                    <p className="about-text text-left">
-                    This content will be a bit descriptive. Having passed the message that we sell 
-                    ceramic tiles and marble, we will now move forward to saying a few things about us as a company.
+                        {showAll ? aboutEssay : slashText(aboutEssay)}
                     </p>
                 </Col>
                 <Col lg={5} md={5} xs={10} className="">

@@ -6,10 +6,12 @@ import Footer from '../components/Footer';
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const imageKit = new ImageKit({
     publicKey: 'public_DgRh+fRF2Y8QPPIyq9+E3ew6nlo=' ,
     urlEndpoint: 'https://ik.imagekit.io/kivel59' ,
-    authenticationEndpoint: 'http://127.0.0.1:5000/api/image-kit-auth'
+    authenticationEndpoint: `${API_URL}/api/image-kit-auth/`
 })
 
 

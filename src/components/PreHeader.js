@@ -1,7 +1,11 @@
 import React from 'react'
 import { Nav, Navbar, Container } from 'react-bootstrap'
 
-const PreHeader = () => {
+const PreHeader = ({content}) => {
+  const defaultEmail = 'ebykaima@gmail.com'
+  const defaultWhatsapp = '+2349084760012'
+
+  const email = content?.email ?? defaultEmail
   return (
     <>
     <Navbar className="bg-secondary" style={{ maxHeight: '20px' }} bg="dark" expand="lg" variant="dark">
@@ -13,8 +17,9 @@ const PreHeader = () => {
         style={{ fontSize: 12 }}
         navbarScroll
       >
-        <Nav.Link href="#action1">kingsleyakahibe@gmail.com</Nav.Link>
-        <Nav.Link href="#action2">+2348141971579</Nav.Link>
+        <Nav.Link href={`mailto:${email}`}>{email}</Nav.Link>
+        <a href="mailto:"></a>
+        <Nav.Link href="#">{content?.whatsapp_no ?? defaultWhatsapp}</Nav.Link>
       </Nav>
       <Nav>
         

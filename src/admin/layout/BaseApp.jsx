@@ -106,7 +106,7 @@ const BaseApp = () => {
             }
         }
 
-        //getUserDetails();
+        getUserDetails();
     }, [])
 
     return (

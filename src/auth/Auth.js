@@ -21,6 +21,20 @@ class Auth {
         }
     }
 
+    async verifyPassword(email, password) {
+        try {
+            const response = await axios.post(API_URL + '/login.php', { email, password });
+            if (response.data.success === 1) {
+                return true
+            }
+            return false;
+        } catch (error) {
+            //throw new Error('Http request failed')
+            throw new Error(error.message)
+            return false;
+        }
+    }
+
     async register(name, email, password) {
         const response = await axios.post(API_URL + 'register.php', {name, email, password});
         return response.data;
@@ -35,7 +49,7 @@ class Auth {
     }
 }
 
-export const {login, register, getCurrentUser, logout} = new Auth();
+export const {login, register, verifyPassword, getCurrentUser, logout} = new Auth();
 
 // export default new Auth();
 // export default {

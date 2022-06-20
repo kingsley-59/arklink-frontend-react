@@ -27,6 +27,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route exact path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/products' element={<Products />} />
           <Route path='/products/:category' element={<Products />} />

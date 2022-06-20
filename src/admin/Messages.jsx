@@ -1,64 +1,22 @@
-import React, {useState} from 'react'
+import axios from 'axios';
+import React, {useState, useEffect} from 'react'
 import { Modal } from 'react-bootstrap';
 
-const QuoteMessages = [
-  {
-    name: 'Random Company Inc.', 
-    email: 'manage@randomcompany.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Random Company Inc.', 
-    email: 'manage@randomcompany.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Random Company Inc.', 
-    email: 'manage@randomcompany.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Random Company Inc.', 
-    email: 'manage@randomcompany.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Random Company Inc.', 
-    email: 'manage@randomcompany.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-]
+const API_URL = process.env.REACT_APP_API_URL;
 
-const ContactMessages = [
-  {
-    name: 'Steven Matt', 
-    email: 'stevenmatt@gmail.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Steven Matt', 
-    email: 'stevenmatt@gmail.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Steven Matt', 
-    email: 'stevenmatt@gmail.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Steven Matt', 
-    email: 'stevenmatt@gmail.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-  {
-    name: 'Steven Matt', 
-    email: 'stevenmatt@gmail.com', 
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe perferendis illo eius eos nemo, distinctio dolore eaque vel iure nam, voluptate corporis. Ipsa, iste error?'
-  },
-]
+const NoMessageAvailable = () => {
+  return (
+      <div className="container text-center p-4 w-100">
+          <div className="shadow rounded p-4">
+              <div className="h1 fw-bold mb-3 m-auto" style={{color: '#c2c2c2'}}>No available messages!</div>
+              <div className="h4 fw-light mb-3 m-auto" style={{color: '#a0a0a0'}}>Please try again later.</div>
+          </div>
+      </div>
+  )
+}
 
 const MessageDisplayModal = ({message, show, handleShow}) => {
-
+  
   const handleClose = () => handleShow(false);
 
   return (
@@ -70,7 +28,7 @@ const MessageDisplayModal = ({message, show, handleShow}) => {
               <div>
                 <span className='fw-bolder'>{message?.name}<br /><small>{message?.email}</small></span><br />
                 <small>{message?.phone ? message?.phone : '[No phone no.]'}</small><br /><br />
-                <p>{message?.text}</p>
+                <p>{message?.quote_details ?? message?.message}</p>
               </div>
           </Modal.Body>
           <Modal.Footer>
@@ -83,6 +41,27 @@ const MessageDisplayModal = ({message, show, handleShow}) => {
 const Messages = () => {
   const [currentMsg, setCurrentMsg] = useState({})
   const [show, setShow] = useState(false)
+  const [contactMessages, setContactMessages] = useState([])
+  const [quoteMessages, setQuoteMessages] = useState([])
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/quotes`)
+    .then(({data}) => {
+      if (data.length !== 0) {
+        setQuoteMessages(data)
+      }
+    })
+    .catch(error => console.log(error))
+
+    axios.get(`${API_URL}/api/messages`)
+    .then(({data}) => {
+      if (data.length !== 0) {
+        setContactMessages(data)
+      }
+    })
+    .catch(error => console.log(error))
+  }, [])
+
   
   const MessageCard = ({message, handleCurrentMsg, handleShow}) => {
     const showMessage = () => {
@@ -108,8 +87,9 @@ const Messages = () => {
           <div className="group-wrapper rounded shadow-sm p-4 mb-4">
             <div className="fw-bolder h4">Quotes</div>
             <hr />
-            {
-              QuoteMessages.map((message, idx) => {
+            { (quoteMessages.length === 0)
+              ? <NoMessageAvailable />
+              : quoteMessages?.map((message, idx) => {
                 return <MessageCard message={message} handleCurrentMsg={setCurrentMsg} handleShow={setShow} key={idx} />
               })
             }
@@ -118,8 +98,9 @@ const Messages = () => {
           <div className="group-wrapper rounded shadow-sm p-4 mb-4">
             <div className="fw-bolder h4">Conatct Messages</div>
             <hr />
-            {
-              ContactMessages.map((message, idx) => {
+            { (contactMessages.length === 0)
+              ? <NoMessageAvailable />
+              :contactMessages?.map((message, idx) => {
                 return <MessageCard message={message} handleCurrentMsg={setCurrentMsg} handleShow={setShow} key={idx} />
               })
             }

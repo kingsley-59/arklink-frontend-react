@@ -1,16 +1,22 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
+import axios from 'axios'
 
+const API_URL = process.env.REACT_APP_API_URL;
 
-const CompanyDetails = () => {
+const CompanyDetails = ({data}) => {
+    const defaultAddress = "20 Ada George Road Port Harcourt"
+    const defaultPhone = '08033101164'
+    const defaultWhatsapp = '+2349084760012'
+    const defaultEmail = 'louisakahibe28@gmail.com'
+
     return (
         <div className='text-white mb-4'>
-            <span>No 225 Ikwerre road, Opp. Mile 3 Bus Stop</span><br/>
-            <span>Port Harcourt, Rivers State</span><br/>
+            <span><strong>Head Office:</strong> {data?.address ?? defaultAddress} </span><br/>
             <span>Nigeria.</span>
             <br/><br/>
-            <span>Tel: +2348123456789</span><br/>
-            <span>Email: arklink@yahoo.com</span><br/>
-            <span>Whatsapp: +2348112347977</span><br/>
+            <span>Phone: {data?.phone ?? defaultPhone}</span><br/>
+            <span>Whatsapp: {data?.whatsapp_no ?? defaultWhatsapp}</span><br/>
+            <span>Email: {data?.email ?? defaultEmail}</span><br/>
         </div>
     )
 }
@@ -33,11 +39,30 @@ const Subscribe = () => {
     const [subscriberEmail, setSubscriberEmail] = useState('')
     const [loading, setLoading] = useState(false)
     const [btnText, setBtnText] = useState('Subscribe')
-
+    
     const handleEmailSubscription = (e) => {
         e.preventDefault();
         setLoading(true);
-        setBtnText('Success!');
+
+        let url = `${API_URL}/api/subscribers`
+        let payload = {
+            email: subscriberEmail
+        }
+        axios.post(url, payload)
+        .then(({data}) => {
+            console.log(data)
+            if (data === 1) {
+                setBtnText('Success!')
+            } else {
+                console.log(data)
+            }
+            return;
+        })
+        .catch(error => {
+            alert('Something went wrong check your network and try again.')
+            console.log('Error: ', error.message)
+        })
+        setLoading(false);
     }
     return (
         <div className='mb-4'>
@@ -54,7 +79,8 @@ const Subscribe = () => {
     )
 }
 
-const Footer = () => {
+const Footer = ({content}) => {
+
   return (
     <div className='site-section p-5 bg-primary'>
         <div className="text-white mb-4">
@@ -62,7 +88,7 @@ const Footer = () => {
         </div>
         <div className="row">
             <div className="col-lg-4 col-sm-12">
-                <CompanyDetails />
+                <CompanyDetails data={content} />
             </div>
             <div className="col-lg-4 col-sm-12">
                 <QuickLinks />

@@ -1,11 +1,12 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import {login, register, logout, getCurrentUser} from '../auth/Auth';
+import {login, register, verifyPassword, logout, getCurrentUser} from '../auth/Auth';
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(false)
+    const [siteData, setSiteData] = useState({})
 
     useEffect(() => {
         setLoading(true);
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
         getCurrentUser,
         login,
         register,
+        verifyPassword,
         logout
     }
 

@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import PreHeader from '../components/PreHeader';
 import NavBanner from '../components/NavBanner';
 import Brands from '../components/Brands';
+import ProductSection from '../components/ProductSection';
 import AllProducts from '../components/AllProducts';
 import CategoryProducts from '../components/CategoryProducts';
 import GallerySection from '../components/GallerySection';
@@ -23,7 +24,7 @@ const Products = () => {
     <PreHeader />
     <Header />
     <NavBanner heading={category ? category : 'Products'}/>
-    { category ? <CategoryProducts category={category} /> : <AllProducts /> }
+    { category ? <CategoryProducts category={category} /> : <ProductSection /> }
     <Brands />
     <GallerySection />
     <ContactSection />
