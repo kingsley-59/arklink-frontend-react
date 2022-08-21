@@ -1,20 +1,22 @@
 import React from 'react'
 import Slider from "react-slick";
-import tileRoom from '../assets/images/tile-room.png';
 
-const Category = ({name}) => {
+const Category = ({name, photo}) => {
     let styles = {
-        aspectRatio: "auto 4 / 3"
+        aspectRatio: "auto 4 / 3",
+        backgroundImage: `url('${photo}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
     }
+
     return (
         <div className='bg-primary category-wrapper d-flex align-items-center justify-content-center p-3 mx-3' style={styles}>
-            <span className="text-white"> {name} </span>
+            <span className="text-white bg-dark bg-opacity-50 rounded p-2"> {name} </span>
         </div>
     );
 }
 
 const Categories = () => {
-    const categoryList = ['Tiles', 'Toilets', 'Marbles', 'Doors', 'Bath tubs'];
     const settings = {
         dots: true,
         infinite: true,
@@ -48,26 +50,26 @@ const Categories = () => {
             }
         ]
     };
-
+    
     return (
         <div className='site-section bg-brown p-5'>
             <div className="container section-title text-center mb-3">categories</div>
             <div className="slider-wrapper">
                 <Slider {...settings} className=''>
                     <div>
-                        <Category name='Tiles' />
+                        <Category name='Tiles' photo={require('../assets/images/tiles-group-1.jpg')} />
                     </div>
                     <div>
-                        <Category name='Toilets' />
+                        <Category name='Toilets' photo={require('../assets/images/pexel-bathroom-2.jpg')} />
                     </div>
                     <div>
-                        <Category name='Marbles' />
+                        <Category name='Marbles' photo={require('../assets/images/marble-1.jpg')} />
                     </div>
                     <div>
-                        <Category name='Doors' />
+                        <Category name='Doors' photo={require('../assets/images/pexel-doors-1.jpg')} />
                     </div>
                     <div>
-                        <Category name='Bath tubs' />
+                        <Category name='Bath tubs' photo={require('../assets/images/pexel-bathroom-4.jpg')} />
                     </div>
                 </Slider>
             </div>

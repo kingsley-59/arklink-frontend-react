@@ -1,17 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Container, Button } from 'react-bootstrap'
 
-const API_URL = process.env.REACT_APP_API_URL;
-
-function slashText(text, lenght = 50) {
-    let textArray = text.split(" ")
-    if (textArray <= lenght) {
-        return textArray.join(" ")
-    }
-    let newTextArray = textArray.slice(0, lenght+1)
-    let result = newTextArray.join(" ")
-    return result + '...';
-}
 
 const AboutSection = ({content, showAll}) => {
     const defaultAboutText = `
@@ -38,7 +27,7 @@ const AboutSection = ({content, showAll}) => {
                 <Col lg={5} md={5} xs={10} className="">
                     <div className="about-hero-image about-hero-1">
                     <div className="about-hero-overlay p-3 d-flex justify-content-center align-items-center">
-                        <a href='/about'><Button className="about-hero-btn btn-outline-primary">Learn More</Button></a>
+                        <a href='/contact#get-quote'><Button className="about-hero-btn btn-outline-primary">Get quote</Button></a>
                     </div>
                     </div>
                 </Col>
@@ -48,3 +37,14 @@ const AboutSection = ({content, showAll}) => {
 }
 
 export default AboutSection;
+
+
+function slashText(text, lenght = 50) {
+    let textArray = text.split(" ")
+    if (textArray <= lenght) {
+        return textArray.join(" ")
+    }
+    let newTextArray = textArray.slice(0, lenght+1)
+    let result = newTextArray.join(" ")
+    return result + '...';
+}

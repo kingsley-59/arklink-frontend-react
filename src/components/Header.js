@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, Navbar, Container, Button, NavDropdown } from 'react-bootstrap'
+import { Nav, Navbar, Container, Button } from 'react-bootstrap'
 
 const Header = () => {
   return (
@@ -30,7 +30,7 @@ const Header = () => {
         <Nav.Link href="/contact">Contact</Nav.Link>
       </Nav>
       <Nav>
-        <a href='/contact'><Button variant="outline-success">Get Quote</Button></a>
+        <a href='/contact#get-quote'><Button variant="outline-success">Get Quote</Button></a>
       </Nav>
     </Navbar.Collapse>
   </Container>

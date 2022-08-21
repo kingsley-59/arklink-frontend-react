@@ -40,9 +40,9 @@ const SideBar = () => {
                 <Link to={'/admin/subscribers'} className='text-decoration-none'>
                     <div className={`menu-item p-3 text-white ${(pathname === '/admin/subscribers') ? 'active' : ''}`}>Subscribers</div>
                 </Link>
-                <Link to={'/admin/gallery'} className='text-decoration-none'>
+                {/* <Link to={'/admin/gallery'} className='text-decoration-none'>
                     <div className={`menu-item p-3 text-white ${(pathname === '/admin/gallery') ? 'active' : ''}`}>Gallery</div>
-                </Link>
+                </Link> */}
             </div>
             <div className="sidebar-footer px-3" style={{position: 'absolute', bottom: 0, left: 0}}>
                 <div className="menu-item p-3 text-white" onClick={() => handleSignOut()}>Log out</div>

@@ -50,7 +50,7 @@ const GetQuote = () => {
     }
 
   return (
-    <section className='w-100 px-4 py-5'>
+    <section className='w-100 px-4 py-5' id='get-quote'>
         <div className="container quote-form-wrapper m-auto rounded shadow p-4" style={{width: '100%', maxWidth: '600px', borderRadius: '20px'}}>
             <div className="quote-heading h3 fw-bolder text-center">Tell Us What You Need...</div>
             <div className="quote-form">

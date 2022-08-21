@@ -15,13 +15,51 @@ const imageKit = new ImageKit({
 
 const Preview = ({payload}) => {
   return (
-    <div className="row border w-100" style={{maxHeight: '300px'}}>
+    <div className="row border w-100 p-4" style={{maxHeight: '300px'}}>
+      <h3>Uploaded image preview</h3>
       <div className="col-4">
         <img src={payload.photo_url} alt={payload.name} width='100%' height='100%' />
       </div>
       <div className="col-8">
         <div className="file-name p-3">{payload.name}</div>
         <div className="file-description p-3">{payload.description}</div>
+      </div>
+    </div>
+  )
+}
+
+const ProductCard = ({item, count}) => {
+  const [deleted, setDeleted] = useState(false)
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this?")) {
+      axios.delete(`${API_URL}/api/products/${id}`)
+      .then(({data}) => {
+        alert('Product deleted successfuly!')
+        setDeleted(true)
+      })
+      .catch(() => {
+        alert('Something went wrong. Please try again!')
+      })
+    }
+    
+    return
+  }
+
+  return (
+    <div className="p-3 shadow-sm mb-2 rounded" style={{display: deleted && 'none'}}>
+      <div className="float-end">
+        <span onClick={() => handleDelete(item.id)} className="fw-bolder bg-danger text-white shadow-sm p-1 align-middle rounded">x</span>
+      </div>
+      <div className="row">
+        <div className="col-sm-1">{count}</div>
+        <div className="col-sm-4 ">
+          <img src={item?.photo_url} alt="product" width="100%" />
+        </div>
+        <div className="col-sm-7 p-3">
+          <div className="">{item?.name}</div>
+          <div className="">{'Category: '}{item?.category}</div>
+          <div className="">{item?.date_added}</div>
+        </div>
       </div>
     </div>
   )
@@ -110,7 +148,7 @@ const Products = () => {
       <section className="p-4">
         <div className="products-heading h3 p-4">Manage Products</div>
         
-        <div className="group-wrapper rounded shadow-sm p-4 mb-4">
+        {/* <div className="group-wrapper rounded shadow-sm p-4 mb-4">
           <div className="fw-bolder">Category Settings</div>
           <hr />
           <div className="row">
@@ -128,7 +166,7 @@ const Products = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="group-wrapper rounded shadow-sm p-4 mb-4">
           <div className="fw-bolder">Add Product</div>
@@ -168,12 +206,10 @@ const Products = () => {
         <div className="group-wrapper rounded shadow-sm p-4 mb-4">
           <div className="fw-bolder">All products</div>
           <hr />
-          <div className="row m-0 text-center">
+          <div className="row m-0 ">
             {
-              (productList.length === 0) ? <span className="h4">No photos yet!</span> 
-              : productList?.map((item, idx) => {
-                return <div className='container rounded p-3 shadow-sm mb-2' key={idx}>{idx + '. ' + item?.name}</div>
-              })
+              (productList.length === 0) ? <span className="h4 text-secondary fw-bold">No photos yet!</span> 
+              : productList?.map((item, idx) =>(<ProductCard item={item} key={idx} count={idx + 1} />))
             }
           </div>
         </div>

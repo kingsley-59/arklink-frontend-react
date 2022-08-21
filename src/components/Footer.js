@@ -53,6 +53,7 @@ const Subscribe = () => {
             console.log(data)
             if (data === 1) {
                 setBtnText('Success!')
+                setTimeout(() => setBtnText('Subscribe'), 5000)
             } else {
                 console.log(data)
             }

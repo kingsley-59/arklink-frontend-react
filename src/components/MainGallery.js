@@ -2,19 +2,33 @@ import React, {useState} from 'react'
 import {Modal} from 'react-bootstrap'
 
 const Images = [
-    {name: '', src: require('../assets/images/pexel-bathroom-1.jpg')},
+    // {name: '', src: require('../assets/images/pexel-bathroom-1.jpg')},
     {name: '', src: require('../assets/images/pexel-bathroom-2.jpg')},
     {name: '', src: require('../assets/images/pexel-bathroom-3.jpg')},
-    {name: '', src: require('../assets/images/pexel-bathroom-4.jpg')},
-    {name: '', src: require('../assets/images/pexel-doors-1.jpg')},
+    // {name: '', src: require('../assets/images/pexel-bathroom-4.jpg')},
+    // {name: '', src: require('../assets/images/pexel-doors-1.jpg')},
     {name: '', src: require('../assets/images/pexel-doors-2.jpg')},
     {name: '', src: require('../assets/images/pexel-doors-3.jpg')},
-    {name: '', src: require('../assets/images/pexel-doors-4.jpg')},
+    // {name: '', src: require('../assets/images/pexel-doors-4.jpg')},
     {name: '', src: require('../assets/images/pexel-tiles-1.jpg')},
     {name: '', src: require('../assets/images/pexel-tiles-2.jpg')},
     {name: '', src: require('../assets/images/pexel-tiles-3.jpg')},
     {name: '', src: require('../assets/images/pexel-tiles-4.jpg')},
-]
+    {name: '', src: require('../assets/images/tiles-1.jpg')},
+    {name: '', src: require('../assets/images/tiles-2.jpg')},
+    {name: '', src: require('../assets/images/tiles-3.jpg')},
+    {name: '', src: require('../assets/images/tiles-4.jpg')},
+    {name: '', src: require('../assets/images/tiles-group-1.jpg')},
+    {name: '', src: require('../assets/images/tiles-group-2.jpg')},
+    {name: '', src: require('../assets/images/tiles-group-3.jpg')},
+    {name: '', src: require('../assets/images/tiles-group-4.jpg')},
+    {name: '', src: require('../assets/images/marble-1.jpg')},
+    {name: '', src: require('../assets/images/marble-2.jpg')},
+    {name: '', src: require('../assets/images/marble-3.jpg')},
+    {name: '', src: require('../assets/images/office-building-1.jpg')},
+    {name: '', src: require('../assets/images/office-building-2.jpg')},
+    {name: '', src: require('../assets/images/office-building-3.jpg')},
+] 
 
 const ImageDisplayModal = ({src, show, handleShow}) => {
 
@@ -50,7 +64,9 @@ const MainGallery = () => {
         )
     }
 
-    const ImageList = Images.map(({name, src}, idx) => {
+    const shuffledList = shuffle(Images)
+
+    const ImageList = shuffledList.map(({name, src}, idx) => {
         return <ImageBox src={src} name={name} key={idx} />
     })
     
@@ -67,3 +83,22 @@ const MainGallery = () => {
 }
 
 export default MainGallery
+
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex !== 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+}
